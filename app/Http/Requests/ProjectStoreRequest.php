@@ -29,8 +29,9 @@ class ProjectStoreRequest extends FormRequest
             'project_type_id' => 'required|exists:project_types,id',
             'experience_id' => 'required|exists:experiences,id',
             'description' => 'nullable|string',
-            'attachments.*' => 'nullable|file', // Validate file attachments
-            'attachments.*.type' => 'nullable|string', // Validate file attachments
+            'attachments' => 'nullable|array', // Validate file attachments
+            'attachments.*.file_type' => 'nullable|string', // Validate file attachments
+            'attachments.*.file' => 'nullable|file', // Validate file attachments
         ];
     }
 }

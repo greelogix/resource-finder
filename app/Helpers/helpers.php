@@ -29,23 +29,23 @@ function uploadSingleFile($file, $path = 'media/')
     $url = url('/') . Storage::url($path);
     return $url;
 }
-function upload_media($project, $media, $storage_path)
+function upload_media($project, $files, $storage_path)
 {
-    if (count($media) > 0) {
+    if (count($files) > 0) {
         $baseUrl = url('/') . '/storage/';
-        $medias = [];
-        foreach ($media as $media_item) {
-            if (isset($media_item['media_file'])) {
-                $banner_image = $media_item['media_file'];
+        $attachments = [];
+        foreach ($files as $item) {
+            if (isset($item['file'])) {
+                $banner_image = $item['file'];
                 $imageName = time() . '_' . preg_replace('/\s+/', '_', $banner_image->getClientOriginalName());
-                $media_item['path'] = $banner_image->storeAs($storage_path, $imageName, 'public');
-                $medias[] = [
+                $item['path'] = $banner_image->storeAs($storage_path, $imageName, 'public');
+                $attachments[] = [
                     'filename' => $banner_image->getClientOriginalName(),
-                    'file_type' => $media_item['file_type'],
-                    'path' => $baseUrl . $media_item['path']
+                    'file_type' => $item['file_type'],
+                    'path' => $baseUrl . $item['path']
                 ];
             }
         }
-        $project->attachments()->createMany($medias);
+        $project->attachments()->createMany($attachments);
     }
 }
