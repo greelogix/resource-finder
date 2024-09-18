@@ -34,17 +34,16 @@ function upload_media($project, $files, $storage_path)
     if (count($files) > 0) {
         $baseUrl = url('/') . '/storage/';
         $attachments = [];
-        foreach ($files as $item) {
-            if (isset($item['file'])) {
-                $banner_image = $item['file'];
-                $imageName = time() . '_' . preg_replace('/\s+/', '_', $banner_image->getClientOriginalName());
-                $item['path'] = $banner_image->storeAs($storage_path, $imageName, 'public');
-                $attachments[] = [
-                    'filename' => $banner_image->getClientOriginalName(),
-                    'file_type' => $item['file_type'],
-                    'path' => $baseUrl . $item['path']
-                ];
-            }
+        foreach ($files as $file) {
+
+            $name = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
+            $path = $file->storeAs($storage_path, $name, 'public');
+            $attachments[] = [
+                'filename' => $file->getClientOriginalName(),
+                'file_type' => $file->getClientOriginalExtension(),
+                'path' => $baseUrl . $path
+            ];
+
         }
         $project->attachments()->createMany($attachments);
     }

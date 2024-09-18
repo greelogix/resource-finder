@@ -30,8 +30,9 @@ class ProjectStoreRequest extends FormRequest
             'experience_id' => 'required|exists:experiences,id',
             'description' => 'nullable|string',
             'attachments' => 'nullable|array', // Validate file attachments
-            'attachments.*.file_type' => 'nullable|string', // Validate file attachments
-            'attachments.*.file' => 'nullable|file', // Validate file attachments
+            'attachments.*' => 'file|max:102400', // Validate file attachments
+            // 'attachments.*.file_type' => 'nullable|string', // Validate file attachments
+            // 'attachments.*.file' => 'nullable|file', // Validate file attachments
         ];
     }
 }
