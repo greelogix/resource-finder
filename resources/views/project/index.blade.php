@@ -17,6 +17,7 @@
         <table class="min-w-full divide-y divide-gray-200">
             <thead>
                 <tr>
+                    <th class="py-2 px-4 border-b">Requested on</th>
                     <th class="py-2 px-4 border-b">User Name</th>
                     <th class="py-2 px-4 border-b">User Email</th>
                     <th class="py-2 px-4 border-b">User Phone</th>
@@ -31,6 +32,7 @@
             <tbody>
                 @forelse($userProjects as $userProject)
                     <tr>
+                        <td class="py-2 px-4 border-b">{{ Carbon\Carbon::parse($userProject->created_at)->diffForHumans()  ?? '--'}}</td>
                         <td class="py-2 px-4 border-b">{{ $userProject->user->name ?? '--' }}</td>
                         <td class="py-2 px-4 border-b">{{ $userProject->user->email ?? '--' }}</td>
                         <td class="py-2 px-4 border-b">{{ $userProject->user->phone_number ?? '--' }}</td>
