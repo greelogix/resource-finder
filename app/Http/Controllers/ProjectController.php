@@ -9,7 +9,7 @@ class ProjectController extends Controller
 {
     public function index()
     {
-        $userProjects = UserProject::with(['user', 'projectType', 'experience', 'attachments'])
+        $userProjects = UserProject::whereHas('user')->with(['user', 'projectType', 'experience', 'attachments'])
             ->orderBy('id', 'desc')
             ->paginate(15);
         return view('project.index', compact('userProjects'));
