@@ -47,6 +47,10 @@ class UserController extends Controller
                 'phone_number' => isset($validated['phone_number']) ? $validated['phone_number'] : null,
                 'password' => Hash::make(Str::random()),
             ]);
+        } else {
+            $user->update([
+                'phone_number' => isset($validated['phone_number']) ? $validated['phone_number'] : null
+            ]);
         }
 
         $res['user'] = new UserResource($user);
