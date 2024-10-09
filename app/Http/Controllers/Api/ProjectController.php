@@ -16,7 +16,7 @@ class ProjectController extends Controller
     public function store(ProjectStoreRequest $request)
     {
         $validated = $request->validated();
-        $user = User::where('email', $validated['email'])->withTrashed()->first();
+        $user = User::where('email', $validated['email'])->first();
 
         if (!$user) {
             $randomInt = rand(999, 99999);
@@ -26,10 +26,6 @@ class ProjectController extends Controller
                 'phone_number' => isset($validated['phone_number']) ? $validated['phone_number'] : null,
                 'password' => Hash::make(Str::random()),
             ]);
-        } else {
-            if ($user->deleted_at) {
-                $user->restore();
-            }
         }
 
         $project = UserProject::create([
